@@ -40,6 +40,11 @@ dependencies:
   google_fonts: ^4.0.3
   flutter_feather_icons: ^2.0.0+1
   font_awesome_flutter: ^10.4.0
+  tcard: ^1.3.5
+  fl_chart: ^0.61.0
+  flutter_slidable: ^2.0.0
+  table_calendar: ^3.0.9
+  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +76,8 @@ flutter:
      - assets/slider-background-1.png
      - assets/slider-background-2.png
      - assets/slider-background-3.png
+     - assets/orange_pencil.png
+     - assets/green_pencil.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

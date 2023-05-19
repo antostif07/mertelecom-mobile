@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.mer_group.mer_group_app">
    <application
-        android:label="mer_group_app"
+        android:label="Mer Group App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

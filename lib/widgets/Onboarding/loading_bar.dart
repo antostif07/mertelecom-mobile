@@ -1,21 +1,18 @@
-import 'package:flutter/widgets.dart';
-import 'package:mer_group_app/Values/values.dart';
+import 'package:flutter/material.dart';
+
+import '../../Values/values.dart';
 
 class LoadingStickerBar extends StatelessWidget {
-  final width;
-
-  const LoadingStickerBar({super.key, this.width});
+  final double width;
+  const LoadingStickerBar({Key? key, required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: 5,
-      decoration: BoxDecoration(
-        color: HexColor.fromHex("5e6373"),
-        borderRadius: BorderRadius.circular(20)
-      ),
-    );
+        width: width,
+        height: 5,
+        decoration: BoxDecoration(
+            color: HexColor.fromHex("5E6373"),
+            borderRadius: BorderRadius.circular(20)));
   }
-
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mer_group_app/Screens/splash_screen.dart';
+
+import 'Screens/splash_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     systemNavigationBarIconBrightness: Brightness.light,
-    statusBarIconBrightness: Brightness.light
+    statusBarIconBrightness: Brightness.light,
   ));
   runApp(const MyApp());
 }
@@ -24,10 +25,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.light
-        )
+          systemOverlayStyle: SystemUiOverlayStyle.light,
+        ),
       ),
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }
