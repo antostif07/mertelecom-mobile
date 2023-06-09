@@ -9,9 +9,8 @@ class UnauthenticatedMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    print(authenticationManager.isLogged.value);
-    return !authenticationManager.isLogged.value || route == Routes.login || route == Routes.signUp ||
-        route == Routes.onBoardingCarousel || route == Routes.onBoardingStart || route == Routes.emailAddressRegistration
+    return !authenticationManager.isLogged() && (route == Routes.login || route == Routes.signUp ||
+        route == Routes.onBoardingCarousel || route == Routes.onBoardingStart || route == Routes.emailAddressRegistration)
         ? null : const RouteSettings(name: Routes.timeline);
   }
 

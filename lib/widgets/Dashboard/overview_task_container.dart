@@ -31,29 +31,39 @@ class OverviewTaskContainer extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  TaskContainerImage(
-                    imageUrl: imageUrl,
-                    backgroundColor: backgroundColor,
-                  ),
-                  AppSpaces.horizontalSpace20,
-                  Text(cardTitle,
-                      style: GoogleFonts.lato(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16))
-                ],
+              Expanded(
+                flex: 1,
+                  child: TaskContainerImage(
+                imageUrl: imageUrl,
+                backgroundColor: backgroundColor,
+              )),
+              Expanded(
+                flex: 3,
+                child: Row(
+                  children: [
+                    AppSpaces.horizontalSpace10,
+                    Text(cardTitle,
+                        style: GoogleFonts.lato(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16)
+                    )
+                  ],
+                ),),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(numberOfItems,
+                        style: GoogleFonts.lato(
+                            color: backgroundColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14)),
+                    const Icon(Icons.chevron_right, color: Colors.white, size: 30),
+                  ],
+                )
               ),
-              Row(children: [
-                Text(numberOfItems,
-                    style: GoogleFonts.lato(
-                        color: backgroundColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14)),
-                AppSpaces.horizontalSpace20,
-                const Icon(Icons.chevron_right, color: Colors.white, size: 30)
-              ])
             ],
           )),
     );

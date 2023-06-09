@@ -91,8 +91,6 @@ class OnBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthenticationManager authManager = Get.find();
 
-    return Obx(() {
-      return authManager.isLogged.value ? const Timeline() : const OnboardingStart();
-    });
+    return authManager.isLogged() ? Timeline() : const OnboardingStart();
   }
 }

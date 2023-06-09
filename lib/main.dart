@@ -8,6 +8,7 @@ import 'package:mer_group_app/Controllers/authentication_manager.dart';
 import 'package:mer_group_app/Middleware/global_middleware.dart';
 import 'package:mer_group_app/Middleware/unauthenticated_middleware.dart';
 import 'package:mer_group_app/Screens/Dashboard/timeline.dart';
+import 'package:mer_group_app/Screens/Profile/profile_overview.dart';
 
 import 'Bindings/sign_up_binding.dart';
 import 'Constants/constants.dart';
@@ -21,7 +22,7 @@ import 'Screens/splash_screen.dart';
 Future<void> main() async {
   await GetStorage.init();
   final UserProvider userProvider = UserProvider();
-  Get.put(AuthenticationManager(userProvider: userProvider));
+  Get.lazyPut(() => AuthenticationManager(userProvider: userProvider));
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -77,9 +78,13 @@ class MyApp extends StatelessWidget {
           middlewares: [UnauthenticatedMiddleware()]
         ),
         GetPage(
-            name: '/timeline', page: () => const Timeline(),
+            name: Routes.timeline, page: () => Timeline(),
             middlewares: [GlobalMiddleware()]
         ),
+        GetPage(
+          name: Routes.profileOverview, page: () => const ProfileOverview(), middlewares: [GlobalMiddleware()],
+          binding: GlobalBindings(),
+        )
       ],
       home: SplashScreen(),
     );

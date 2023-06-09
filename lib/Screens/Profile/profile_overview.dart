@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mer_group_app/Controllers/authentication_manager.dart';
 
 import '../../Values/values.dart';
 import '../../widgets/Buttons/primary_progress_button.dart';
@@ -14,7 +15,7 @@ import 'my_profile.dart';
 import 'my_team.dart';
 import 'profile_notification_settings.dart';
 
-class ProfileOverview extends StatelessWidget {
+class ProfileOverview extends GetView<AuthenticationManager> {
   const ProfileOverview({Key? key}) : super(key: key);
 
   @override
@@ -40,13 +41,13 @@ class ProfileOverview extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Blake Gordon",
+              child: Text(controller.getConnectedUser().name,
                   style: GoogleFonts.lato(
                       color: Colors.white,
                       fontSize: 40,
                       fontWeight: FontWeight.bold)),
             ),
-            Text("blake@email.com",
+            Text(controller.getConnectedUser().email,
                 style: GoogleFonts.lato(
                     color: HexColor.fromHex("B0FFE1"), fontSize: 17)),
             Padding(
@@ -106,7 +107,7 @@ class ProfileOverview extends StatelessWidget {
                   ]),
             ),
             AppSpaces.verticalSpace20,
-            ContainerLabel(label: "Notification"),
+            const ContainerLabel(label: "Notification"),
             AppSpaces.verticalSpace10,
             BadgedContainer(
               label: "Do not disturb",
@@ -117,7 +118,7 @@ class ProfileOverview extends StatelessWidget {
               badgeColor: "FDA5FF",
             ),
             AppSpaces.verticalSpace20,
-            ContainerLabel(label: "Manage"),
+            const ContainerLabel(label: "Manage"),
             AppSpaces.verticalSpace10,
             Row(children: [
               Expanded(
@@ -127,7 +128,7 @@ class ProfileOverview extends StatelessWidget {
                   value: "8",
                   badgeColor: "FDA5FF",
                   callback: () {
-                    Get.to(() => MyTeams());
+                    Get.to(() => const MyTeams());
                   },
                 ),
               ),
@@ -142,19 +143,27 @@ class ProfileOverview extends StatelessWidget {
               )
             ]),
             AppSpaces.verticalSpace20,
-            Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: HexColor.fromHex("FF968E"),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: Text("Log Out",
-                      style: GoogleFonts.lato(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
-                ))
+            InkWell(
+              onTap: () {
+                controller.logOut();
+              },
+              child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: HexColor.fromHex("FF968E"),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                    child: Obx(() {
+                      return controller.isLoading.value ? const CircularProgressIndicator() : Text("Log Out",
+                          style: GoogleFonts.lato(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold));
+                    }),
+                  )
+              ),
+            ),
           ])))),
       Positioned(
           top: 50,

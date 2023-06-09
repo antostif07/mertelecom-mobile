@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:get/get.dart';
+import 'package:mer_group_app/Controllers/dashboard_controller.dart';
 
 import '../../BottomSheets/bottom_sheets.dart';
 import '../../Constants/constants.dart';
@@ -8,21 +10,10 @@ import '../../widgets/DarkBackground/darkRadialBackground.dart';
 import '../../widgets/Dashboard/bottomNavigationItem.dart';
 import '../../widgets/Dashboard/dashboard_add_icon.dart';
 import '../../widgets/Dashboard/dashboard_add_sheet.dart';
-import 'dashboard.dart';
 
-class Timeline extends StatefulWidget {
-  const Timeline({Key? key}) : super(key: key);
+class Timeline extends GetView<DashboardController> {
+  const Timeline({super.key});
 
-  @override
-  _TimelineState createState() => _TimelineState();
-}
-
-class _TimelineState extends State<Timeline> {
-  ValueNotifier<int> bottomNavigatorTrigger = ValueNotifier(0);
-
-  StatelessWidget currentScreen = Dashboard();
-
-  final PageStorageBucket bucket = PageStorageBucket();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,13 +24,9 @@ class _TimelineState extends State<Timeline> {
             color: HexColor.fromHex("#181a1f"),
             position: "topLeft",
           ),
-          ValueListenableBuilder(
-              valueListenable: bottomNavigatorTrigger,
-              builder: (BuildContext context, _, __) {
-                return PageStorage(
-                    bucket: bucket,
-                    child: dashBoardScreens[bottomNavigatorTrigger.value]);
-              })
+          Obx(() => PageStorage(
+              bucket: controller.bucket,
+              child: dashBoardScreens[controller.bottomNavigatorTrigger.value]))
         ]),
         bottomNavigationBar: Container(
             width: double.infinity,
@@ -55,15 +42,21 @@ class _TimelineState extends State<Timeline> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  BottomNavigationItem(
+                  Obx(() => BottomNavigationItem(
                       itemIndex: 0,
-                      notifier: bottomNavigatorTrigger,
-                      icon: Icons.widgets),
+                      onTap: () {
+                        controller.bottomNavigatorTrigger.value = 0;
+                      },
+                      notifier: controller.bottomNavigatorTrigger.value,
+                      icon: Icons.widgets)),
                   const Spacer(),
-                  BottomNavigationItem(
+                  Obx(() => BottomNavigationItem(
                       itemIndex: 1,
-                      notifier: bottomNavigatorTrigger,
-                      icon: FeatherIcons.clipboard),
+                      onTap: () {
+                        controller.bottomNavigatorTrigger.value = 1;
+                      },
+                      notifier: controller.bottomNavigatorTrigger.value,
+                      icon: FeatherIcons.clipboard),),
                   const Spacer(),
                   DashboardAddButton(
                     iconTapped: (() {
@@ -73,15 +66,21 @@ class _TimelineState extends State<Timeline> {
                     }),
                   ),
                   const Spacer(),
-                  BottomNavigationItem(
+                  Obx(() => BottomNavigationItem(
                       itemIndex: 2,
-                      notifier: bottomNavigatorTrigger,
-                      icon: FeatherIcons.bell),
+                      onTap: () {
+                        controller.bottomNavigatorTrigger.value = 2;
+                      },
+                      notifier: controller.bottomNavigatorTrigger.value,
+                      icon: FeatherIcons.bell)),
                   const Spacer(),
-                  BottomNavigationItem(
+                  Obx(() => BottomNavigationItem(
                       itemIndex: 3,
-                      notifier: bottomNavigatorTrigger,
-                      icon: FeatherIcons.search)
+                      onTap: () {
+                        controller.bottomNavigatorTrigger.value = 3;
+                      },
+                      notifier: controller.bottomNavigatorTrigger.value,
+                      icon: FeatherIcons.search))
                 ])));
   }
 }

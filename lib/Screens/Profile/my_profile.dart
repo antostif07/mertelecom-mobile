@@ -60,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: 75,
                       content: "Edit",
                       onPressed: () {
-                        Get.to(() => EditProfilePage());
+                        Get.to(() => const EditProfilePage());
                       }),
                 ),
                 AppSpaces.verticalSpace20,

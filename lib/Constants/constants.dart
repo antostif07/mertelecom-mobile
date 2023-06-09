@@ -46,4 +46,6 @@ class Routes {
 
   // Authenticated Routes
   static const String timeline = '/timeline';
+
+  static const profileOverview = '/profile-overview';
 }

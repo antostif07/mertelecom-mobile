@@ -10,7 +10,10 @@ class GlobalMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    return authenticationManager.isLogged.value && !(route == Routes.login || route == Routes.signUp ||
+    if (kDebugMode) {
+      print(authenticationManager.isLogged());
+    }
+    return authenticationManager.isLogged() && !(route == Routes.login || route == Routes.signUp ||
         route == Routes.onBoardingCarousel || route == Routes.onBoardingStart || route == Routes.emailAddressRegistration)
         ? null : const RouteSettings(name: Routes.onBoardingStart);
   }
@@ -25,28 +28,5 @@ class GlobalMiddleware extends GetMiddleware {
   List<Bindings> onBindingsStart(List<Bindings>? bindings) {
     bindings = [GlobalBindings()];
     return bindings;
-  }
-
-  @override
-  GetPageBuilder? onPageBuildStart(GetPageBuilder? page) {
-    if (kDebugMode) {
-      print('Bindings of ${page.toString()} are ready');
-    }
-    return page;
-  }
-
-  @override
-  Widget onPageBuilt(Widget page) {
-    if (kDebugMode) {
-      print('Widget ${page.toStringShort()} will be showed');
-    }
-    return page;
-  }
-
-  @override
-  void onPageDispose() {
-    if (kDebugMode) {
-      print('Page disposed');
-    }
   }
 }

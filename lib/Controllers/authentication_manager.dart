@@ -8,7 +8,6 @@ class AuthenticationManager extends GetxController with CacheManager {
   AuthenticationManager({required this.userProvider});
 
   final UserProvider userProvider;
-  final isLogged = false.obs;
   final isLoading = false.obs;
   final emailAddress = ''.obs;
   final password = ''.obs;
@@ -22,9 +21,13 @@ class AuthenticationManager extends GetxController with CacheManager {
     }
   }
 
-  void logOut() {
-    isLogged.value = false;
-    removeToken();
+  Future<void> logOut() async {
+    isLoading(true);
+    await setIsLogged(false);
+    await removeToken();
+    await removeConnectedUser();
+    isLoading(false);
+    Get.toNamed(Routes.onBoardingStart);
   }
 
   Future<void> login(body) async {
@@ -32,9 +35,19 @@ class AuthenticationManager extends GetxController with CacheManager {
       isLoading(true);
       await userProvider.login(body).then((response) {
         if (response.statusCode == 200) {
-          saveToken(response.body?.token);
-          isLogged(true);
-          Get.offAllNamed(Routes.timeline);
+          try {
+            userProvider.getCurrentUser(response.body?.token).then((value) {
+              if (response.statusCode == 200) {
+                saveToken(response.body?.token);
+                saveConnectedUser(value.body);
+                setIsLogged(true);
+                Get.offAllNamed(Routes.timeline);
+              }
+            });
+          } finally {
+
+          }
+
         } else {
           return null;
         }
@@ -44,12 +57,12 @@ class AuthenticationManager extends GetxController with CacheManager {
     }
   }
 
-  void checkLoginStatus() {
+  Future<void> checkLoginStatus() async {
     final token = getToken();
     if (token != null) {
-      isLogged.value = true;
+      await setIsLogged(true);
     } else {
-      isLogged.value = false;
+      await setIsLogged(false);
     }
   }
 }
